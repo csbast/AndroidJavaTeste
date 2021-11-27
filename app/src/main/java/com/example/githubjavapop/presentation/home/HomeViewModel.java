@@ -42,14 +42,14 @@ public class HomeViewModel extends ViewModel {
         call.enqueue(new Callback<RepositoriesResponse>() {
             @Override
             public void onResponse(@NonNull Call<RepositoriesResponse> call, @NonNull Response<RepositoriesResponse> response) {
-               // isLoading.setValue();
+                isLoading.setValue(true);
                 if (response.body() != null) {
                     RepositoriesResponse repositoriesResponse = response.body();
                     List<Repositories> repositoriesList = mapRepositoryFromResponse(repositoriesResponse);
                     HomeViewModel.this.repositoriesList.setValue(repositoriesList);
                 }
                 Log.d("HomeFragment", "Response = " + repositoriesList);
-              //  isLoading.setValue(false);
+                isLoading.setValue(false);
             }
 
             @Override
