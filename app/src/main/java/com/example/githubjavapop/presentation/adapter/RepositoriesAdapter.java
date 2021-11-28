@@ -10,30 +10,27 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.githubjavapop.R;
 import com.example.githubjavapop.databinding.ItemRowBinding;
+import com.example.githubjavapop.domain.model.Owner;
 import com.example.githubjavapop.domain.model.Repositories;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
+public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapter.MyViewHolder> {
 
     private final List<Repositories> repositoryList = new ArrayList<>();
 
-    public Adapter() {
+    public RepositoriesAdapter() {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter.MyViewHolder holder, int position) {
-        final Repositories repo = repositoryList.get(position);
-        holder.repositoryName.setText(repo.getName());
-        holder.repositoryDescription.setText(repo.getDescription());
-        holder.forkCount.setText(String.valueOf(repo.getForksCount()));
-        holder.starCount.setText(String.valueOf(repo.getStargazersCount()));
-//        Owner ownerObject = repo.getOwnerObject();
-//        holder.userName.setText(String.valueOf(ownerObject.getLogin()));
-        // Glide.with(context).load(repositoryList.get(position).getOwnerObject().getAvatar_url()).apply(RequestOptions.centerCropTransform()).into(holder.userAvatar);
+    public void onBindViewHolder(@NonNull RepositoriesAdapter.MyViewHolder holder, int position) {
+        final Repositories item = repositoryList.get(position);
+        holder.bind(item);
     }
 
     @Override
@@ -58,9 +55,19 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
             starIcon = itemView.findViewById(R.id.starIconImageView);
             userAvatar = itemView.findViewById(R.id.userAvatarImageView);
         }
+
+        public void bind(Repositories item) {
+
+            repositoryName.setText(item.getName());
+            repositoryDescription.setText(item.getDescription());
+            forkCount.setText(String.valueOf(item.getForksCount()));
+            starCount.setText(String.valueOf(item.getStargazersCount()));
+            Owner ownerObject = item.getOwner();
+            userName.setText(String.valueOf(ownerObject.getLogin()));
+            Glide.with(itemView.getContext()).load(item.getOwner().getAvatarUrl()).apply(RequestOptions.centerCropTransform()).into(userAvatar);
+
+        }
     }
-
-
 
     public void updateList(List<Repositories> repositoriesList) {
         this.repositoryList.addAll(repositoriesList);
@@ -69,7 +76,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
 
     @NonNull
     @Override
-    public Adapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RepositoriesAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ItemRowBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.item_row,
@@ -79,5 +86,4 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder> {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row, parent, false);
         return new MyViewHolder(view, binding);
     }
-
 }

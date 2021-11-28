@@ -14,12 +14,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.githubjavapop.R;
 import com.example.githubjavapop.databinding.FragmentHomeBinding;
-import com.example.githubjavapop.presentation.adapter.Adapter;
+import com.example.githubjavapop.presentation.adapter.RepositoriesAdapter;
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private Adapter adapter;
+    private RepositoriesAdapter repositoriesAdapter;
     private HomeViewModel viewModel;
 
     public HomeFragment() {
@@ -54,7 +54,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void setupListObserver() {
-        viewModel.getRepositoriesList().observe(getViewLifecycleOwner(), list -> adapter.updateList(list));
+        viewModel.getRepositoriesList().observe(getViewLifecycleOwner(), list -> repositoriesAdapter.updateList(list));
     }
 
     private void loadRepositories() {
@@ -73,7 +73,7 @@ public class HomeFragment extends Fragment {
         RecyclerView recyclerView = binding.recyclerView;
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new Adapter();
-        recyclerView.setAdapter(adapter);
+        repositoriesAdapter = new RepositoriesAdapter();
+        recyclerView.setAdapter(repositoriesAdapter);
     }
 }

@@ -7,7 +7,7 @@ public class Repositories {
     private String name;
     @SerializedName("full_name")
     private String fullName;
-    private Owner OwnerObject;
+    private Owner owner;
     @SerializedName("html_url")
     private String htmlUrl;
     @SerializedName("description")
@@ -22,7 +22,7 @@ public class Repositories {
         this.forksCount = forksCount;
         this.htmlUrl = htmlUrl;
         this.name = name;
-        this.OwnerObject = userObject;
+        this.owner = userObject;
         this.fullName = fullName;
         this.stargazersCount = stargazersCount;
     }
@@ -43,12 +43,12 @@ public class Repositories {
         this.fullName = fullName;
     }
 
-    public Owner getOwnerObject() {
-        return OwnerObject;
+    public Owner getOwner() {
+        return owner;
     }
 
-    public void setOwnerObject(Owner ownerObject) {
-        OwnerObject = ownerObject;
+    public void setOwner(Owner owner) {
+        this.owner = owner;
     }
 
     public String getHtmlUrl() {
