@@ -14,17 +14,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.githubjavapop.R;
 import com.example.githubjavapop.databinding.FragmentHomeBinding;
-import com.example.githubjavapop.domain.model.Repositories;
 import com.example.githubjavapop.presentation.adapter.Adapter;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class HomeFragment extends Fragment {
 
     private FragmentHomeBinding binding;
-    private List<Repositories> repositoriesList;
     private Adapter adapter;
     private HomeViewModel viewModel;
 
@@ -39,7 +33,7 @@ public class HomeFragment extends Fragment {
         viewModel = new ViewModelProvider(requireActivity()).get(HomeViewModel.class);
         setupObservers();
         setupRecyclerView();
-        setupNetwork();
+        loadRepositories();
         return binding.getRoot();
 
     }
@@ -51,27 +45,20 @@ public class HomeFragment extends Fragment {
 
     private void setupLoadingObserver() {
         viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
-            if(isLoading){
+            if (isLoading) {
                 showLoading();
-            }else {
+            } else {
                 hideLoading();
             }
         });
-
     }
 
     private void setupListObserver() {
-        viewModel.getRepositoriesList().observe(getViewLifecycleOwner(), list -> adapter.updateList(list)
-        );
+        viewModel.getRepositoriesList().observe(getViewLifecycleOwner(), list -> adapter.updateList(list));
     }
 
-    private void setupNetwork() {
-        viewModel.setupNetwork();
-        updateList();
-    }
-
-    private void updateList() {
-        adapter.updateList(repositoriesList);
+    private void loadRepositories() {
+        viewModel.loadRepositories();
     }
 
     private void hideLoading() {
@@ -84,10 +71,9 @@ public class HomeFragment extends Fragment {
 
     private void setupRecyclerView() {
         RecyclerView recyclerView = binding.recyclerView;
-        repositoriesList = new ArrayList<>();
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new Adapter(repositoriesList, requireContext());
+        adapter = new Adapter();
         recyclerView.setAdapter(adapter);
     }
 }

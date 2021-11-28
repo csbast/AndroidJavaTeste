@@ -36,7 +36,7 @@ public class HomeViewModel extends ViewModel {
         return repositoriesList;
     }
 
-    public void setupNetwork() {
+    public void loadRepositories() {
         isLoading.postValue(true);
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         Call<RepositoriesResponse> call = apiService.getItems();
@@ -74,12 +74,7 @@ public class HomeViewModel extends ViewModel {
     public List<Repositories> sortByName(List<Repositories> repositoriesList) {
 //        List<Repositories> repositoriesList = this.repositoriesList.getValue();
         if (repositoriesList != null) {
-            Collections.sort(repositoriesList, new Comparator<Repositories>() {
-                @Override
-                public int compare(Repositories o1, Repositories o2) {
-                    return o1.getName().compareToIgnoreCase(o2.getName());
-                }
-            });
+            Collections.sort(repositoriesList, (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
         }
         return repositoriesList;
 
