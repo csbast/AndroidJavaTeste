@@ -75,8 +75,8 @@ public class Repositories {
         this.stargazersCount = stargazersCount;
     }
 
-    public float getForksCount() {
-        return forksCount;
+    public int getForksCount() {
+        return Math.round(forksCount);
     }
 
     public void setForksCount(float forksCount) {
