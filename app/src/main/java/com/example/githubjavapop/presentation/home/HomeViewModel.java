@@ -6,14 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.githubjavapop.domain.model.Repositories;
-import com.example.githubjavapop.domain.model.RepositoriesResponse;
 import com.example.githubjavapop.data.network.ApiClient;
 import com.example.githubjavapop.data.network.ApiService;
+import com.example.githubjavapop.domain.model.Repositories;
+import com.example.githubjavapop.domain.model.RepositoriesResponse;
 
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -23,7 +21,7 @@ public class HomeViewModel extends ViewModel {
 
     private MutableLiveData<List<Repositories>> repositoriesList;
 
-    private MutableLiveData<Boolean> isLoading;
+    private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
 
     public HomeViewModel() {
     }
@@ -36,13 +34,12 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void setupNetwork() {
-
+        isLoading.postValue(true);
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         Call<RepositoriesResponse> call = apiService.getItems();
         call.enqueue(new Callback<RepositoriesResponse>() {
             @Override
             public void onResponse(@NonNull Call<RepositoriesResponse> call, @NonNull Response<RepositoriesResponse> response) {
-                isLoading.setValue(true);
                 if (response.body() != null) {
                     RepositoriesResponse repositoriesResponse = response.body();
                     List<Repositories> repositoriesList = mapRepositoryFromResponse(repositoriesResponse);
@@ -55,6 +52,7 @@ public class HomeViewModel extends ViewModel {
             @Override
             public void onFailure(@NonNull Call<RepositoriesResponse> call, @NonNull Throwable t) {
                 Log.d("TAG", "Response = " + t.toString());
+                isLoading.postValue(false);
             }
         });
     }
@@ -63,32 +61,24 @@ public class HomeViewModel extends ViewModel {
         return repositoriesResponse.getRepositories();
     }
 
-    public void setIsLoading(MutableLiveData<Boolean> isLoading) {
-        this.isLoading = isLoading;
-    }
-
     public MutableLiveData<Boolean> getIsLoading() {
-        if (isLoading == null) {
-            isLoading = new MutableLiveData<Boolean>(false);
-        }
         return isLoading;
     }
 
-    public void sortByname(List<Repositories> repositoriesList) {
-        if (repositoriesList != null) {
-            repositoriesList = repositoriesList.stream()
-                    .sorted(Comparator.comparing(Repositories::getName))
-                    .collect(Collectors.toList());
-            this.repositoriesList.setValue(repositoriesList);
-        }
-    }
 
-    public void sortByStars(List<Repositories> repositoriesList) {
-        if (repositoriesList != null) {
-            repositoriesList = repositoriesList.stream()
-                    .sorted(Comparator.comparing(Repositories::getStargazers_count))
-                    .collect(Collectors.toList());
-            this.repositoriesList.setValue(repositoriesList);
-        }
-    }
+    //    public void sortByname(List<Repositories> repositoriesList) {
+//        if (repositoriesList != null) {
+//            repositoriesList = repositoriesList.sort(Comparator.comparing(Repositories::getName));
+//            this.repositoriesList.setValue(repositoriesList);
+//        }
+//    }
+//
+//    public void sortByStars(List<Repositories> repositoriesList) {
+//        if (repositoriesList != null) {
+//            repositoriesList = repositoriesList.stream()
+//                    .sorted(Comparator.comparing(Repositories::getStargazers_count))
+//                    .collect(Collectors.toList());
+//            this.repositoriesList.setValue(repositoriesList);
+//        }
+//    }
 }

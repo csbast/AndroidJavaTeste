@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,7 +20,7 @@ import com.example.githubjavapop.presentation.adapter.Adapter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observer;
+
 
 public class HomeFragment extends Fragment {
 
@@ -46,16 +47,19 @@ public class HomeFragment extends Fragment {
 
     private void setupObservers() {
         setupListObserver();
-//        setupLoadingObserver();
+        setupLoadingObserver();
     }
 
-//    private void setupLoadingObserver() {
-//        viewModel.getIsLoading().observe(getViewLifecycleOwner(),Observer { isLoading ->
-//            if(isLoading){}
-//        };
-//
-//
-//    }
+    private void setupLoadingObserver() {
+        viewModel.getIsLoading().observe(getViewLifecycleOwner(), isLoading -> {
+            if(isLoading){
+                showLoading();
+            }else {
+                hideLoading();
+            }
+        });
+
+    }
 
     private void setupListObserver() {
         viewModel.getRepositoriesList().observe(getViewLifecycleOwner(), list -> adapter.updateList(list)

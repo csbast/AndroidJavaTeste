@@ -1,16 +1,9 @@
 package com.example.githubjavapop.domain.model;
 
-import com.google.gson.annotations.Expose;
-import com.google.gson.annotations.SerializedName;
-
 public class Owner {
 
-    @SerializedName("login")
-    @Expose
-    private String login;
-    @SerializedName("avatar_url")
-    @Expose
-    private String avatar_url;
+    private final String login;
+    private final String avatar_url;
 
     public  Owner(String userName, String avatarUrl){
         this.avatar_url = avatarUrl;
