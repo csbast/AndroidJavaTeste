@@ -12,9 +12,7 @@ import com.example.githubjavapop.domain.model.Repositories;
 import com.example.githubjavapop.domain.model.RepositoriesResponse;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
-import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -46,9 +44,9 @@ public class HomeViewModel extends ViewModel {
                 if (response.body() != null) {
                     RepositoriesResponse repositoriesResponse = response.body();
                     List<Repositories> repositoriesList = mapRepositoryFromResponse(repositoriesResponse);
-                    List<Repositories> repositoriesListSortedByName = sortByName(repositoriesList);
+//                    List<Repositories> repositoriesListSortedByName = sortByName(repositoriesList);
 
-                    HomeViewModel.this.repositoriesList.setValue(repositoriesListSortedByName);
+                    HomeViewModel.this.repositoriesList.setValue(repositoriesList);
                 }
                 Log.d("HomeFragment", "Response = " + repositoriesList);
                 isLoading.setValue(false);
@@ -71,31 +69,18 @@ public class HomeViewModel extends ViewModel {
     }
 
 
-    public List<Repositories> sortByName(List<Repositories> repositoriesList) {
-//        List<Repositories> repositoriesList = this.repositoriesList.getValue();
-        if (repositoriesList != null) {
-            Collections.sort(repositoriesList, (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
+    public void sortByName() {
+        if (repositoriesList.getValue() != null) {
+            Collections.sort(repositoriesList.getValue(), (o1, o2) -> o1.getName().compareToIgnoreCase(o2.getName()));
+            this.repositoriesList.setValue(repositoriesList.getValue());
         }
-        return repositoriesList;
-
-
-//        if(repositoriesList != null){
-//            repositoriesList.sort(Comparator.comparing(Repositories::getName));
-//            this.repositoriesList.setValue(repositoriesList);
-//        }
-
-//        Transformations.map(repositoriesList, repositoriesList ->
-
-//                );
-//       repositoriesList.getValue().sort(Comparator.comparing(Repositories::getName));
     }
-//
-//    public void sortByStars(List<Repositories> repositoriesList) {
-//        if (repositoriesList != null) {
-//            repositoriesList = repositoriesList.stream()
-//                    .sorted(Comparator.comparing(Repositories::getStargazers_count))
-//                    .collect(Collectors.toList());
-//            this.repositoriesList.setValue(repositoriesList);
-//        }
-//    }
+
+    public void sortByStars() {
+        if (this.repositoriesList.getValue() != null) {
+            Collections.sort(repositoriesList.getValue(), (o1, o2) -> Integer.compare(o2.getStargazersCount(), o1.getStargazersCount()));
+            this.repositoriesList.setValue(repositoriesList.getValue());
+        }
+    }
 }
+

@@ -70,6 +70,7 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
     }
 
     public void updateList(List<Repositories> repositoriesList) {
+        this.repositoryList.clear();
         this.repositoryList.addAll(repositoriesList);
         notifyDataSetChanged();
     }

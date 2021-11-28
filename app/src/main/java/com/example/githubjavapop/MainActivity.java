@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toolbar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.githubjavapop.databinding.ActivityMainBinding;
@@ -14,7 +14,6 @@ import com.example.githubjavapop.presentation.home.HomeViewModel;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Toolbar toolbar;
     private ActivityMainBinding binding;
     private HomeViewModel homeViewModel;
 
@@ -22,6 +21,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+////        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+//        toolbar = binding.toolbar;
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
          }
 
@@ -35,16 +38,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.menuFilterItem:
-                return true;
-            case R.id.menuSortByNameItem:
-                return true;
-            case R.id.menuSortByStarsItem:
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
+        int itemId = item.getItemId();
+        if (itemId == R.id.menuFilterItem) {
+            return true;
+        } else if (itemId == R.id.menuSortByNameItem) {
+            homeViewModel.sortByName();
+            return true;
+        } else if (itemId == R.id.menuSortByStarsItem) {
+            homeViewModel.sortByStars();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
     }
 
 }

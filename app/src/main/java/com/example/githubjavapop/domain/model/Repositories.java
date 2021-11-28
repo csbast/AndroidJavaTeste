@@ -67,8 +67,8 @@ public class Repositories {
         this.description = description;
     }
 
-    public float getStargazersCount() {
-        return stargazersCount;
+    public int getStargazersCount() {
+        return Math.round(stargazersCount);
     }
 
     public void setStargazersCount(float stargazersCount) {
