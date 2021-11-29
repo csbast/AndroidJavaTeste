@@ -64,6 +64,7 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
             starCount.setText(String.valueOf(item.getStargazersCount()));
             Owner ownerObject = item.getOwner();
             userName.setText(String.valueOf(ownerObject.getLogin()));
+            fullName.setText(String.valueOf(item.getFullName()));
             Glide.with(itemView.getContext()).load(item.getOwner().getAvatarUrl()).apply(RequestOptions.centerCropTransform()).into(userAvatar);
 
         }

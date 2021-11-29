@@ -3,4 +3,7 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="test_field_size">Bacon ipsum dolor amet cow cupim shank venison pork belly sirloin flank buffalo porchetta tenderloin turkey picanha. Salami flank short loin kielbasa sausage turducken alcatra kevin shank filet mignon porchetta pork chop</string>
+    <string name="sort_by_name">Sort by name</string>
+    <string name="sort_by_number_of_stars">Sort by number of stars</string>
+    <string name="search">Search</string>
 </resources>
