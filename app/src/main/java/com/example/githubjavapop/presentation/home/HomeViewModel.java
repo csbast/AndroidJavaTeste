@@ -78,7 +78,8 @@ public class HomeViewModel extends ViewModel {
     public void filterList(String query) {
         if (repositoriesList.getValue() != null) {
             repositoriesList.getValue().removeIf((Repositories repository) ->
-                    !repository.getName().toLowerCase().contains(query.toLowerCase())
+                    !repository.getOwner().getLogin().toLowerCase().contains(query.toLowerCase())
+            && !repository.getName().toLowerCase().contains(query.toLowerCase())
             );
             this.repositoriesList.setValue(repositoriesList.getValue());
         }
