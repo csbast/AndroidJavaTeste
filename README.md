@@ -1,7 +1,7 @@
 # AndroidJavaTeste
 Android MVVM Architecture with Java + RecylerView + Retrofit 
 
-#Desafios
+# Desafios
 -Java (Estava mais habituado com Kotlin)
 
 # Improvements to do
