@@ -62,11 +62,6 @@ public class HomeViewModel extends ViewModel {
         }
     }
 
-    /**
-     * Reconheço que essa não seria a melhor implementação, com o kotlin poderiamos utilizar
-     * Coroutines para resolver o problema de concorrência, no Java poderiamos utilizar RxJava mas infelizmente não tive tempo de compreender o funcionamento da biblioteca dentro do prazo
-     *
-     */
     public void loadSortedRepositories(String query) {
         isLoading.postValue(true);
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
