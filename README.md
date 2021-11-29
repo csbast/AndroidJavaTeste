@@ -2,6 +2,6 @@
 Android MVVM Architecture with Java + RecylerView + Retrofit 
 
 # Improvements needed
-° Data Binding
-° RxJava
-° Repository Pattern
+- Data Binding
+- RxJava
+- Repository Pattern
