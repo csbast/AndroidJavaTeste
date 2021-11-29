@@ -8,6 +8,6 @@
 
 - Por fim foquei em isolar a lógica do app dentro da ViewModel, de forma a ter tudo pronto para implementação de testes unitário. Outra feature que quero aplicar é encapsular ainda mais a lógica de negócio e de tratamento de dados em UseCases e Repositories.
 
-- Esse projeto foi feito nos ultimos 3 dias então tem várias coisa que irei agregar nas próximas verões.
+- Esse projeto foi feito com prazo então tem várias coisa que irei agregar nas próximas verões.
 
 - No final gostei muito pois foi bem desafiador e consegui aplicar a funcionalidade core do produto. Estou bem ansioso para continuar.
