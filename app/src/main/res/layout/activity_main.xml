@@ -13,7 +13,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
-            android:backgroundTint="#DA000000"
+            android:backgroundTint="#8F4C4646"
             android:minHeight="?attr/actionBarSize"
             android:theme="?attr/actionBarTheme"
             app:layout_constraintEnd_toEndOf="parent"
@@ -22,7 +22,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/main_menu"
             app:title="@string/app_name"
-            app:titleTextColor="@color/white"/>
+            app:titleTextColor="@color/black"/>
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/fragmentContainerView"

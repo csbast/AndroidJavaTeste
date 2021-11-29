@@ -6,4 +6,5 @@
     <string name="sort_by_name">Sort by name</string>
     <string name="sort_by_number_of_stars">Sort by number of stars</string>
     <string name="search">Search</string>
+    <string name="refresh_list">Refresh List</string>
 </resources>

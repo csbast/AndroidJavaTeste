@@ -34,7 +34,7 @@ public class HomeViewModel extends ViewModel {
     }
 
     public void loadRepositories() {
-        if (repositoriesList.getValue() == null) {
+        if (repositoriesList.getValue() == null || repositoriesList.getValue().size() < 30) {
             isLoading.postValue(true);
             ApiService apiService = ApiClient.getClient().create(ApiService.class);
             Call<RepositoriesResponse> call = apiService.getItems();
@@ -59,6 +59,35 @@ public class HomeViewModel extends ViewModel {
         }
     }
 
+    /**
+     * Reconheço que essa não seria a melhor implementação, com o kotlin poderiamos utilizar
+     * Coroutines para resolver o problema de concorrência, no Java poderiamos utilizar RxJava mas infelizmente não tive tempo de compreender o funcionamento da biblioteca dentro do prazo
+     *
+     */
+    public void loadSortedRepositories(String query) {
+        isLoading.postValue(true);
+        ApiService apiService = ApiClient.getClient().create(ApiService.class);
+        Call<RepositoriesResponse> call = apiService.getItems();
+        call.enqueue(new Callback<RepositoriesResponse>() {
+            @Override
+            public void onResponse(@NonNull Call<RepositoriesResponse> call, @NonNull Response<RepositoriesResponse> response) {
+                if (response.body() != null) {
+                    RepositoriesResponse repositoriesResponse = response.body();
+                    List<Repositories> filtredList = filterMyList(mapRepositoryFromResponse(repositoriesResponse), query);
+                    HomeViewModel.this.repositoriesList.setValue(filtredList);
+                }
+                Log.d("HomeFragment", "Response = " + repositoriesList);
+                isLoading.postValue(false);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call<RepositoriesResponse> call, @NonNull Throwable t) {
+                Log.d("TAG", "Response = " + t.toString());
+                isLoading.postValue(false);
+            }
+        });
+    }
+
     private List<Repositories> mapRepositoryFromResponse(RepositoriesResponse repositoriesResponse) {
         return repositoriesResponse.getRepositories();
     }
@@ -75,13 +104,22 @@ public class HomeViewModel extends ViewModel {
         }
     }
 
-    public void filterList(String query) {
-        if (repositoriesList.getValue() != null) {
-            repositoriesList.getValue().removeIf((Repositories repository) ->
+    private List<Repositories> filterMyList(List<Repositories> list, String query) {
+        if (list != null) {
+            list.removeIf((Repositories repository) ->
                     !repository.getOwner().getLogin().toLowerCase().contains(query.toLowerCase())
-            && !repository.getName().toLowerCase().contains(query.toLowerCase())
+                            && !repository.getName().toLowerCase().contains(query.toLowerCase())
             );
-            this.repositoriesList.setValue(repositoriesList.getValue());
+        }
+        return list;
+    }
+
+    public void filterList(String query) {
+        if (repositoriesList.getValue() != null && repositoriesList.getValue().size() < 30) {
+            loadSortedRepositories(query);
+        } else {
+            List<Repositories> filtredList = filterMyList(repositoriesList.getValue(), query);
+            HomeViewModel.this.repositoriesList.setValue(filtredList);
         }
     }
 
@@ -92,4 +130,3 @@ public class HomeViewModel extends ViewModel {
         }
     }
 }
-

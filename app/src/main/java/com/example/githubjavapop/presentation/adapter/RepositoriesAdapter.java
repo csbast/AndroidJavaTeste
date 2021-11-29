@@ -7,13 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.githubjavapop.R;
-import com.example.githubjavapop.databinding.ItemRowBinding;
 import com.example.githubjavapop.domain.model.Owner;
 import com.example.githubjavapop.domain.model.Repositories;
 
@@ -43,7 +41,7 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
         public TextView repositoryName, repositoryDescription, forkCount, starCount, userName, fullName;
         public ImageView forkIcon, starIcon, userAvatar;
 
-        public MyViewHolder(@NonNull View itemView, ItemRowBinding binding) {
+        public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             repositoryDescription = itemView.findViewById(R.id.repositoryDescriptionTextView);
             repositoryName = itemView.findViewById(R.id.repositoryNameTextView);
@@ -79,13 +77,7 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
     @NonNull
     @Override
     public RepositoriesAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemRowBinding binding = DataBindingUtil.inflate(
-                LayoutInflater.from(parent.getContext()),
-                R.layout.item_row,
-                parent,
-                false
-        );
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_row, parent, false);
-        return new MyViewHolder(view, binding);
+        return new MyViewHolder(view);
     }
 }

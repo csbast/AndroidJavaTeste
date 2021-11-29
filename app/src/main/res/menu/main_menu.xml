@@ -7,7 +7,7 @@
         android:icon="@android:drawable/ic_menu_search"
         android:title="@string/search"
         app:actionViewClass="androidx.appcompat.widget.SearchView"
-        app:showAsAction="collapseActionView|ifRoom" />
+        app:showAsAction="always" />
 
     <item
         android:id="@+id/menuSortByNameItem"
@@ -16,6 +16,11 @@
     <item
         android:id="@+id/menuSortByStarsItem"
         android:title="@string/sort_by_number_of_stars"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/refreshList"
+        android:title="@string/refresh_list"
         app:showAsAction="never"/>
 
 </menu>
