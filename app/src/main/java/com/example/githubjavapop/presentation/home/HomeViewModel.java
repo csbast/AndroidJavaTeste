@@ -62,7 +62,7 @@ public class HomeViewModel extends ViewModel {
         }
     }
 
-    public void loadSortedRepositories(String query) {
+    public void loadFiltredRepositories(String query) {
         isLoading.postValue(true);
         ApiService apiService = ApiClient.getClient().create(ApiService.class);
         Call<RepositoriesResponse> call = apiService.getItems();
@@ -114,7 +114,7 @@ public class HomeViewModel extends ViewModel {
 
     public void filterList(String query) {
         if (repositoriesList.getValue() != null && repositoriesList.getValue().size() < 30) {
-            loadSortedRepositories(query);
+            loadFiltredRepositories(query);
         } else {
             List<Repositories> filtredList = filterMyList(repositoriesList.getValue(), query);
             HomeViewModel.this.repositoriesList.setValue(filtredList);
