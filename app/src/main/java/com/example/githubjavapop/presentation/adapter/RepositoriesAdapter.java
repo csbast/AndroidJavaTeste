@@ -65,7 +65,7 @@ public class RepositoriesAdapter extends RecyclerView.Adapter<RepositoriesAdapte
             Owner ownerObject = item.getOwner();
             userName.setText(String.valueOf(ownerObject.getLogin()));
             fullName.setText(String.valueOf(item.getFullName()));
-            Glide.with(itemView.getContext()).load(item.getOwner().getAvatarUrl()).apply(RequestOptions.centerCropTransform()).into(userAvatar);
+            Glide.with(itemView.getContext()).load(item.getOwner().getAvatarUrl()).apply(RequestOptions.circleCropTransform()).into(userAvatar);
 
         }
     }
