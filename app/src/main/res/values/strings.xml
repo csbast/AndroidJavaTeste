@@ -7,4 +7,6 @@
     <string name="sort_by_number_of_stars">Sort by number of stars</string>
     <string name="search">Search</string>
     <string name="refresh_list">Refresh List</string>
+    <string name="connection_failed">Connection Failed!</string>
+    <string name="dialog_connection_error_msg">Cannot connect to the internet. Please check your internet connection</string>
 </resources>

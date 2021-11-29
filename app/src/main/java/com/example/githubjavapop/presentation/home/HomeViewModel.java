@@ -23,6 +23,8 @@ public class HomeViewModel extends ViewModel {
 
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
 
+    public MutableLiveData<Boolean> connectionFailureDialog = new MutableLiveData<>(false);
+
     public HomeViewModel() {
     }
 
@@ -54,6 +56,7 @@ public class HomeViewModel extends ViewModel {
                 public void onFailure(@NonNull Call<RepositoriesResponse> call, @NonNull Throwable t) {
                     Log.d("TAG", "Response = " + t.toString());
                     isLoading.postValue(false);
+                    connectionFailureDialog.postValue(true);
                 }
             });
         }
@@ -128,5 +131,9 @@ public class HomeViewModel extends ViewModel {
             repositoriesList.getValue().sort((o1, o2) -> Integer.compare(o2.getStargazersCount(), o1.getStargazersCount()));
             this.repositoriesList.setValue(repositoriesList.getValue());
         }
+    }
+
+    public MutableLiveData<Boolean> getConnectionFailureDialog() {
+        return connectionFailureDialog;
     }
 }
