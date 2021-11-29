@@ -23,7 +23,7 @@ public class HomeViewModel extends ViewModel {
 
     private final MutableLiveData<Boolean> isLoading = new MutableLiveData<>(false);
 
-    public MutableLiveData<Boolean> connectionFailureDialog = new MutableLiveData<>(false);
+    private final MutableLiveData<Boolean> connectionFailureDialog = new MutableLiveData<>(false);
 
     public HomeViewModel() {
     }
