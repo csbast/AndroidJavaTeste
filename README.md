@@ -1,2 +1,2 @@
 # AndroidJavaTeste
-Java
+Android MVVM Architecture with Java + RecylerView + Retrofit 
